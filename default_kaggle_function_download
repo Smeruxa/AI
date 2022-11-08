@@ -1,0 +1,6 @@
+!pip install kaggle
+!mkdir ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+!kaggle datasets download constantinwerner/human-detection-dataset
+!unzip /content/human-detection-dataset.zip
