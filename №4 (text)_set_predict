@@ -1,0 +1,34 @@
+"""
+предсказываем оценку пользователя user1
+
+средние значение по всем фильма, который пользователь user1 посмотрел
++ 
+похожесть user1 на user2 * оценка фильма user2
+"""
+
+u1_mean = sum(u1)/len([x for x in u1 if x != 0])
+print(u1_mean)
+
+# предсказывает оценку пользователя i для фильма k
+def predict_rating(i, k, M):
+  """
+  i : int - id of user
+  k : int - id of movie
+  M : list - matrix (users, movies)
+  """
+  mean_i = sum(M[i])/len([x for x in M[i] if x != 0])
+
+  S = 0
+  N = 0
+
+  for j in range(len(M)):
+    if M[j][k] > 0: # если j-ый пользователь посмотрел k-ый фильм
+      similarity_ij = cosine(M[i], M[j]) # похожесть i-го на j-го
+      mean_j = sum(M[j])/len([x for x in M[j] if x != 0]) # средняя оценка по всем фильмам для пользователя j
+      S += similarity_ij*(M[j][k] - mean_j)
+      N += abs(similarity_ij)
+  
+  return round(mean_i + S/N,1)
+
+predicted_rating = predict_rating(10, 96, M)
+print(predicted_rating)
